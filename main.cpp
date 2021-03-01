@@ -31,11 +31,21 @@ QJsonObject loadJsonFromFile(const QString &filename)
 	return json;
 }
 
+void saveAdressBookEntryPropertiesToFile(const QJsonObject &properties)
+{
+	saveJsonToFile("AdressBookEntry.json", properties);
+}
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	AdressBookEntry w;
-	w.show();
+
+	AdressBookEntry entry;
+
+	entry.fromJson(loadJsonFromFile("AdressBookEntry.json"));
+	QObject::connect(&entry, &AdressBookEntry::propertiesChanged, &saveAdressBookEntryPropertiesToFile);
+
+	entry.show();
+
 	return a.exec();
 }

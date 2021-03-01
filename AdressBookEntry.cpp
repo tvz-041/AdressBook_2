@@ -54,6 +54,7 @@ QJsonObject AdressBookEntry::toJson() const
 void AdressBookEntry::save()
 {
 	ui->pushButton_save->setText("Сохранить");
+	emit propertiesChanged(toJson());
 }
 
 void AdressBookEntry::markUnsavedChanges()
