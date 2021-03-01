@@ -8,6 +8,7 @@ AdressBookEntry::AdressBookEntry(QWidget *parent)
 	, ui(new Ui::AdressBookEntry)
 {
 	ui->setupUi(this);
+	m_hasUnsavedChanges = false;
 
 	connect(ui->lineEdit_firstName, &QLineEdit::textEdited, this, &AdressBookEntry::markUnsavedChanges);
 	connect(ui->lineEdit_secondName, &QLineEdit::textEdited, this, &AdressBookEntry::markUnsavedChanges);
@@ -56,11 +57,15 @@ QJsonObject AdressBookEntry::toJson() const
 
 void AdressBookEntry::save()
 {
-	ui->pushButton_save->setText("Сохранить");
-	emit propertiesChanged(toJson());
+	if (m_hasUnsavedChanges) {
+		ui->pushButton_save->setText("Сохранить");
+		emit propertiesChanged(toJson());
+		m_hasUnsavedChanges = false;
+	}
 }
 
 void AdressBookEntry::markUnsavedChanges()
 {
+	m_hasUnsavedChanges = true;
 	ui->pushButton_save->setText("Сохранить*");
 }
