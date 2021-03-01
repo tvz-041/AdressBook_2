@@ -33,7 +33,10 @@ void AdressBookEntry::fromJson(const QJsonObject &properties)
 	ui->lineEdit_adress->setText(properties["adress"].toString());
 	ui->lineEdit_homePhoneNumber->setText(properties["homePhoneNumber"].toString());
 	ui->lineEdit_mobilePhoneNumber->setText(properties["mobilePhoneNumber"].toString());
+
+	ui->plainTextEdit_other->blockSignals(true);
 	ui->plainTextEdit_other->setPlainText(properties["other"].toString());
+	ui->plainTextEdit_other->blockSignals(false);
 }
 
 QJsonObject AdressBookEntry::toJson() const
