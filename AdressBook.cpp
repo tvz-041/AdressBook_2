@@ -1,3 +1,4 @@
+#include <QModelIndex>
 #include <QStringListModel>
 
 #include "AdressBookEntry.h"
@@ -35,4 +36,14 @@ void AdressBook::addEntry()
 	m_model->setData(m_model->index(m_entries.count()), entry.fullName());
 
 	m_entries.append(entry);
-}
+}
+
+void AdressBook::removeCurrentEntry()
+{
+	QModelIndex currentIndex = ui->listView->currentIndex();
+
+	if (currentIndex.isValid()) {
+		m_model->removeRow(currentIndex.row());
+		m_entries.removeAt(currentIndex.row());
+	}
+}

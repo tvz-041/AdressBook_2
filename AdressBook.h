@@ -23,6 +23,7 @@ public:
 
 public slots:
 	void addEntry();
+	void removeCurrentEntry();
 
 private:
 	Ui::AdressBook *ui;
