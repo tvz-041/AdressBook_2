@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 
+#include "Entry.h"
+
+class QStringListModel;
+
 class AdressBookEntry;
 
 namespace Ui {
@@ -21,6 +25,9 @@ private:
 	Ui::AdressBook *ui;
 
 	AdressBookEntry *m_entryEditWidget = nullptr;
+
+	QStringListModel *m_model = nullptr;
+	QList<Entry> m_entries;
 };
 
 #endif // ADRESSBOOK_H

@@ -10,12 +10,14 @@ CONFIG += c++11
 
 SOURCES += \
     AdressBook.cpp \
+    Entry.cpp \
     main.cpp \
     AdressBookEntry.cpp
 
 HEADERS += \
     AdressBook.h \
-    AdressBookEntry.h
+    AdressBookEntry.h \
+    Entry.h
 
 FORMS += \
     AdressBook.ui \
