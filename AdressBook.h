@@ -21,6 +21,9 @@ public:
 	explicit AdressBook(QWidget *parent = nullptr);
 	~AdressBook();
 
+public slots:
+	void addEntry();
+
 private:
 	Ui::AdressBook *ui;
 

@@ -22,3 +22,17 @@ AdressBook::~AdressBook()
 {
 	delete ui;
 }
+
+//public slots:
+
+void AdressBook::addEntry()
+{
+	Entry entry;
+	entry.firstName = "Имя";
+	entry.secondName = "Фамилия";
+
+	m_model->insertRow(m_entries.count());
+	m_model->setData(m_model->index(m_entries.count()), entry.fullName());
+
+	m_entries.append(entry);
+}
