@@ -17,6 +17,9 @@ AdressBook::AdressBook(QWidget *parent) :
 
 	m_model = new QStringListModel(this);
 	ui->listView->setModel(m_model);
+
+	connect(ui->pushButton_add, &QPushButton::clicked, this, &AdressBook::addEntry);
+	connect(ui->pushButton_remove, &QPushButton::clicked, this, &AdressBook::removeCurrentEntry);
 }
 
 AdressBook::~AdressBook()
