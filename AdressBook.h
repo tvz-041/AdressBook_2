@@ -24,6 +24,8 @@ public:
 public slots:
 	void addEntry();
 	void removeCurrentEntry();
+	void loadCurrentEntry(const QModelIndex &current);
+	void saveCurrentEntry(const Entry &entry);
 
 private:
 	Ui::AdressBook *ui;

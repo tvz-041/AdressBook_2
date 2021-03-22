@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QModelIndex>
 #include <QStringListModel>
 
@@ -20,6 +21,8 @@ AdressBook::AdressBook(QWidget *parent) :
 
 	connect(ui->pushButton_add, &QPushButton::clicked, this, &AdressBook::addEntry);
 	connect(ui->pushButton_remove, &QPushButton::clicked, this, &AdressBook::removeCurrentEntry);
+	connect(ui->listView->selectionModel(), &QItemSelectionModel::currentChanged, this, &AdressBook::loadCurrentEntry);
+	connect(m_entryEditWidget, &AdressBookEntry::propertiesChanged, this, &AdressBook::saveCurrentEntry);
 }
 
 AdressBook::~AdressBook()
@@ -43,10 +46,27 @@ void AdressBook::addEntry()
 
 void AdressBook::removeCurrentEntry()
 {
-	QModelIndex currentIndex = ui->listView->currentIndex();
+	QModelIndex current = ui->listView->currentIndex();
 
-	if (currentIndex.isValid()) {
-		m_model->removeRow(currentIndex.row());
-		m_entries.removeAt(currentIndex.row());
+	if (current.isValid()) {
+		m_model->removeRow(current.row());
+		m_entries.removeAt(current.row());
+	}
+}
+
+void AdressBook::loadCurrentEntry(const QModelIndex &current)
+{
+	if (current.isValid()) {
+		m_entryEditWidget->fromEntry(m_entries[current.row()]);
+	}
+}
+
+void AdressBook::saveCurrentEntry(const Entry &entry)
+{
+	QModelIndex current = ui->listView->currentIndex();
+
+	if (current.isValid()) {
+		m_model->setData(current, entry.fullName());
+		m_entries[current.row()] = entry;
 	}
 }
