@@ -1,5 +1,7 @@
 #include <QJsonObject>
 
+#include "Entry.h"
+
 #include "AdressBookEntry.h"
 #include "ui_AdressBookEntry.h"
 
@@ -24,6 +26,35 @@ AdressBookEntry::AdressBookEntry(QWidget *parent)
 AdressBookEntry::~AdressBookEntry()
 {
 	delete ui;
+}
+
+void AdressBookEntry::fromEntry(const Entry &entry)
+{
+	ui->lineEdit_firstName->setText(entry.firstName);
+	ui->lineEdit_secondName->setText(entry.secondName);
+	ui->lineEdit_thirdName->setText(entry.thirdName);
+	ui->lineEdit_adress->setText(entry.adress);
+	ui->lineEdit_homePhoneNumber->setText(entry.homePhoneNumber);
+	ui->lineEdit_mobilePhoneNumber->setText(entry.mobilePhoneNumber);
+
+	ui->plainTextEdit_other->blockSignals(true);
+	ui->plainTextEdit_other->setPlainText(entry.other);
+	ui->plainTextEdit_other->blockSignals(false);
+}
+
+Entry AdressBookEntry::toEntry() const
+{
+	Entry entry;
+
+	entry.firstName			= ui->lineEdit_firstName->text();
+	entry.secondName		= ui->lineEdit_secondName->text();
+	entry.thirdName			= ui->lineEdit_thirdName->text();
+	entry.adress			= ui->lineEdit_adress->text();
+	entry.homePhoneNumber	= ui->lineEdit_homePhoneNumber->text();
+	entry.mobilePhoneNumber = ui->lineEdit_mobilePhoneNumber->text();
+	entry.other				= ui->plainTextEdit_other->toPlainText();
+
+	return entry;
 }
 
 void AdressBookEntry::fromJson(const QJsonObject &properties)
@@ -59,7 +90,7 @@ void AdressBookEntry::save()
 {
 	if (m_hasUnsavedChanges) {
 		ui->pushButton_save->setText("Сохранить");
-		emit propertiesChanged(toJson());
+		emit propertiesChanged(toEntry());
 		m_hasUnsavedChanges = false;
 	}
 }
